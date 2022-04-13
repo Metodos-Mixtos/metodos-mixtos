@@ -63,7 +63,10 @@ def diccionario_rutas(path_OneDrive='/Users/Daniel/OneDrive - C- ANALISIS SAS/')
         'pnn' : user+'programacion/geoinfo/Colombia/Territoriales/Parques_Nacionales_Naturales.shp',
         'resguardos':user+'programacion/geoinfo/Colombia/Territoriales/Resguardos_Indigenas.shp',
         'consejos':user+'programacion/geoinfo/Colombia/Territoriales/Consejos_comunitarios.shp',
-        'sustracciones_reservas':user+'programacion/geoinfo/Colombia/Territoriales/Sustracciones_Definitivas_Ley2_marzo_2021/Sustracciones_Definitivas_Ley2_marzo_2021.shp',
+        'runap':user+'programacion/geoinfo/Colombia/bosques/runap2/runap2Polygon.shp', #Registro único nacional de áreas protegidas.
+        'humedales': user+'programacion/geoinfo/Colombia/bosques/Humedales_RAMSAR_Agosto_2018/Humedales_RAMSAR_Agosto_2018.shp', #Humedales
+        'paramos':user+'programacion/geoinfo/Colombia/bosques/Paramos_Delimitados_Junio_2020/Paramos_Delimitados_Junio_2020.shp', #Páramos declarados
+                       'sustracciones_reservas':user+'programacion/geoinfo/Colombia/Territoriales/Sustracciones_Definitivas_Ley2_marzo_2021/Sustracciones_Definitivas_Ley2_marzo_2021.shp',
         'zonificacion_reservas':user+'programacion/geoinfo/Colombia/Territoriales/Zonificacion_Ley2_marzo_2021/Zonificacion_Ley2_marzo_2021.shp',
         'reservas':user+'programacion/geoinfo/Colombia/Territoriales/Reserva_Ley2_marzo_2021/Reserva_Ley2_marzo_2021.shp',
         'jes': user+'programacion/geoinfo/Colombia/Territoriales/jurisdicciones_especiales.shp',
@@ -219,7 +222,7 @@ def get_bounding_box(gdf):
 
 
 def mapa_general(shape,
-                 path_OneDrive='/Users/Daniel/OneDrive - C- ANALISIS SAS/',
+                path_OneDrive='/Users/Daniel/OneDrive - C- ANALISIS SAS/',
                 año='2019',
                 show_coca=True,
                 coca='coca19', 
@@ -289,7 +292,7 @@ def mapa_general(shape,
         pnn_legend = mpatches.Patch(color='limegreen', label='Parque Nacional') 
         legend_patches = legend_patches + [pnn_legend]
         #Add label
-        pnn.apply(lambda x: ax.annotate(s=x['NOM_PARQ'], 
+        pnn.apply(lambda x: ax.annotate(text=x['NOM_PARQ'], 
                                          xy=x.geometry.centroid.coords[0], 
                                          ha='center', 
                                          color='forestgreen', 
@@ -301,7 +304,7 @@ def mapa_general(shape,
         cca = cargar_capa_individual(paths['consejos'], mask=bbx)
         cca.plot(ax=ax, color='peru', alpha=0.5)
         #Add label
-        cca.apply(lambda x: ax.annotate(s=x['NOMBRE'], 
+        cca.apply(lambda x: ax.annotate(text=x['NOMBRE'], 
                                          xy=x.geometry.centroid.coords[0], 
                                          ha='center', 
                                          color='saddlebrown', 
@@ -359,7 +362,7 @@ def mapa_general(shape,
         vrds = cargar_capa_individual(paths['vrds'], mask=df) #Veredas
         vrds.plot(ax=ax, edgecolor='grey', alpha=0.001)  
         #Labels for veredas
-        vrds.apply(lambda x: ax.annotate(s=x['NOMBRE_VER'], xy=x.geometry.centroid.coords[0], ha='center', color='grey', fontsize=7),axis=1);
+        vrds.apply(lambda x: ax.annotate(text=x['NOMBRE_VER'], xy=x.geometry.centroid.coords[0], ha='center', color='grey', fontsize=7),axis=1);
         vrds.boundary.plot(ax=ax, color='grey', linestyle='--') #Draw boundaries for veredas
     #EMF
     try:
@@ -430,7 +433,7 @@ def mapa_general(shape,
     #Add labels for the primary shape
     if labels==True:
         try:
-            df.apply(lambda x: ax.annotate(s=x[labels_col], 
+            df.apply(lambda x: ax.annotate(text=x[labels_col], 
                                    xy=x.geometry.centroid.coords[0], 
                                    ha='center', color='black', 
                                    fontsize=10),axis=1)
@@ -478,7 +481,7 @@ def mapa_municipal(cod_mpio,
     ax = mapa_general(df, path_OneDrive=path_OneDrive, **kwargs)
     if 'title' in kwargs:
         ax.set_title(kwargs.get('title', 'Mapa diagnóstico'), fontdict={'fontsize': 16})
-    df.apply(lambda x: ax.annotate(s=x['NOMB_MPIO'], xy=x.geometry.centroid.coords[0], ha='center', color='black', fontsize=10),axis=1)
+    df.apply(lambda x: ax.annotate(text=x['NOMB_MPIO'], xy=x.geometry.centroid.coords[0], ha='center', color='black', fontsize=10),axis=1)
     if filename != '.':    
         plt.savefig(filename, dpi=dpi)
     return ax

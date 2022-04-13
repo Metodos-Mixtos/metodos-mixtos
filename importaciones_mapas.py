@@ -39,11 +39,10 @@ init_notebook_mode(connected=True)
 
 
 #sys.prefix
-sys.path.append('/Users/Daniel/OneDrive - C- ANALISIS SAS/programacion/funciones/')
+#sys.path.append('/Users/Daniel/OneDrive - C- ANALISIS SAS/programacion/funciones/')
 
 #Estilos para pandas
 pd.options.display.float_format = '{:,.2f}'.format
 
 import mapas
 
-paths = mapas.diccionario_rutas()

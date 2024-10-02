@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='metodos-mixtos',
+    name='metodos_mixtos',
     version='0.1',
     packages=find_packages(),
     description='Paquete the Python para Métodos Mixtos Conslutores',

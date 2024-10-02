@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib as mpl
 from shapely.geometry import box
+import xarray as xr
 
 #Se centran los outputs para que después haya un mejor display
 from IPython.display import display, HTML

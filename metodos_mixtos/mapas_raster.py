@@ -1,56 +1,41 @@
 #Program to create maps with rasters
-from rasterstats import zonal_stats, point_query
+from rasterstats import zonal_stats
 import numpy as np
 import os
-import imageio
 import matplotlib.pyplot as plt
 import geopandas as gpd
 import pandas as pd
 
 import subprocess
-from osgeo import gdal
+from osgeo import gdal 
 
 #Estos paquetes son para la transformación de los archivos .nc en raster o GeoTiff
-import netCDF4 as nc
-import xarray as xr
-import rioxarray
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.patches as mpatches
-import matplotlib.lines as mlines
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-import xarray
 import contextily as ctx
 import rasterio as rio
 import fiona
 from rasterio import mask
-import seaborn as sns
 
 from shapely.geometry import box
-from shapely.geometry import mapping, shape
-from shapely.geometry import Point, MultiPolygon
+from shapely.geometry import Point
 from shapely import affinity
 
-from rasterio.plot import show
 import numpy as np
-from fiona.crs import from_epsg
 import glob
-import tempfile
 
 from matplotlib.lines import Line2D
-from matplotlib.patches import Patch 
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from datetime import date
 
 import numpy as np
 import rasterio
 from rasterio.transform import from_origin
-from rasterio.enums import Resampling
-from rasterio.warp import calculate_default_transform, reproject, Resampling
 from rasterio.crs import CRS
-from rasterio.io import MemoryFile
 import pandas as pd
 
 #Crear un diccionario con todas las rutas a la información necesaria

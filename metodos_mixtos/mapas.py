@@ -1,4 +1,16 @@
 #Este archivo contiene funciones que facilitan la construcción de mapas
+#Se importan los paquetes basico necesarios
+import pandas as pd
+import geopandas as gpd
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+import contextily as ctx
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import matplotlib as mpl
+from shapely.geometry import box
+
 import pandas as pd
 import geopandas as gpd
 import os
@@ -6,36 +18,49 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.lines as mlines
-import seaborn as sns
-import sys
 import numpy as np
-import mapclassify
 import contextily as ctx
 from shapely.geometry import box
 import mapclassify
-from shapely.ops import cascaded_union
-from matplotlib.patches import Patch
-from matplotlib.lines import Line2D
 
 
 #%%
-def diccionario_rutas(path_OneDrive='/Users/Daniel/Library/CloudStorage/OneDrive-SharedLibraries-VestigiumMétodosMixtosAplicadosSAS/'):
+import pandas as pd
+import os
 
-    """Retornan un diccionario con las rutas a los archivos
-    ---
-    path_OneDrive: Ruta al folder de OneDrive que contiene la carpeta "programación".
+def diccionario_rutas(programacion_path, geoinfo_path):
     """
-    archivo_rutas = 'MMC - General - Programacion/funciones/rutas.xlsx'
+    Reads an Excel file containing paths and replaces the first part of each path 
+    based on whether it begins with 'programacion' or 'geoinfo'. 
     
-    df = pd.read_excel(path_OneDrive+archivo_rutas)
-    df['Path'] = df['Path'].apply(lambda x: path_OneDrive + x)
-    paths = dict(zip(df['Key'], df['Path']))
-            
-    #Paths OS agnostic paths
-    for i in paths:
-        paths[i] = os.path.abspath(paths[i])
+    The modified paths are then combined with a specified base path.
 
+    Parameters:
+    - programacion_path (str): The path to 'programacion' folder from Métodos Mixtos.
+    - geoinfo_path (str): The path to 'geoinfo' folder from Métodos Mixtos.
+    
+    Returns:
+    - dict: A dictionary with keys from the Excel file and modified paths as values.
+    """
+    archivo_rutas = 'rutas.xlsx'
+    
+    # Read the Excel file using openpyxl
+    df = pd.read_excel(archivo_rutas, engine='openpyxl')
+    
+    def replace_path(value):
+        """Replace the prefix of the path based on its starting string."""
+        if value.startswith('programacion'):
+            return value.replace('programacion', programacion_path, 1)
+        elif value.startswith('geoinfo'):
+            return value.replace('geoinfo', geoinfo_path, 1)
+        return value  # Return unchanged if it doesn't match
+
+    df['Path'] = df['Path'].apply(replace_path)  # Apply the replacement function
+    df['Path'] = df['Path'].apply(lambda x: os.path.join(x))  # Append the base path
+    paths = dict(zip(df['Key'], df['Path']))
+    
     return paths
+
 
 #%%Se crea una función para cargar una sola capa a la vez, en caso que se necesite
 def cargar_capa_individual(filename, **kwargs):

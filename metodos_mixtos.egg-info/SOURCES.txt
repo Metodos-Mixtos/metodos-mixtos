@@ -1,0 +1,5 @@
+setup.py
+metodos_mixtos.egg-info/PKG-INFO
+metodos_mixtos.egg-info/SOURCES.txt
+metodos_mixtos.egg-info/dependency_links.txt
+metodos_mixtos.egg-info/top_level.txt

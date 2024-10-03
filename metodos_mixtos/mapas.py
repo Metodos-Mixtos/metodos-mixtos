@@ -42,14 +42,10 @@ def diccionario_rutas(programacion_path, geoinfo_path):
     Returns:
     - dict: A dictionary with keys from the Excel file and modified paths as values.
     """
-    archivo_rutas = 'rutas.xlsx'
-    # Assuming this file is in the same directory as the mapas module
-    rutas_dir = os.path.dirname(__file__)  # Get the directory of the current file
-    rutas_file_path = os.path.join(rutas_dir, archivo_rutas)  # Combine to get full path
+    archivo_rutas = os.path.join(programacion_path,'funciones/rutas.xlsx')
 
-    
     # Read the Excel file using openpyxl
-    df = pd.read_excel(rutas_file_path, engine='openpyxl')
+    df = pd.read_excel(archivo_rutas, engine='openpyxl')
     
     def replace_path(value):
         """Replace the prefix of the path based on its starting string."""
